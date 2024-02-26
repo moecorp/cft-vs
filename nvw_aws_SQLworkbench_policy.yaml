@@ -1,0 +1,81 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: CFT MAnaged via stackset in Payer account. 
+Resources:              
+  NVWAWSSQLWorkbench:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: CFT MAnaged via stackset in Payer account. Developer Access to SQLWorkbench with no resource constraints 
+      ManagedPolicyName: NVW_AWS_Developer_SQLWorkbench
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - sqlworkbench:AssociateConnectionWithChart
+              - sqlworkbench:AssociateConnectionWithTab
+              - sqlworkbench:AssociateQueryWithTab
+              - sqlworkbench:BatchDeleteFolder
+              - sqlworkbench:BatchGetNotebookCell
+              - sqlworkbench:CreateAccount
+              - sqlworkbench:CreateChart
+              - sqlworkbench:CreateConnection
+              - sqlworkbench:CreateFolder
+              - sqlworkbench:CreateNotebookCell
+              - sqlworkbench:CreateNotebook
+              - sqlworkbench:CreateNotebookFromVersion
+              - sqlworkbench:CreateNotebookVersion
+              - sqlworkbench:CreateSavedQuery
+              - sqlworkbench:DeleteChart
+              - sqlworkbench:DeleteConnection
+              - sqlworkbench:DeleteNotebook
+              - sqlworkbench:DeleteNotebookCell
+              - sqlworkbench:DeleteNotebookVersion
+              - sqlworkbench:DeleteSavedQuery
+              - sqlworkbench:DeleteTab
+              - sqlworkbench:DriverExecute
+              - sqlworkbench:DuplicateNotebook
+              - sqlworkbench:ExportNotebook
+              - sqlworkbench:GenerateSession
+              - sqlworkbench:GetAccountInfo
+              - sqlworkbench:GetAccountSettings
+              - sqlworkbench:GetAutocompletionMetadata
+              - sqlworkbench:GetAutocompletionResource
+              - sqlworkbench:GetChart
+              - sqlworkbench:GetConnection
+              - sqlworkbench:GetNotebook
+              - sqlworkbench:GetNotebookVersion
+              - sqlworkbench:GetQueryExecutionHistory
+              - sqlworkbench:GetSavedQuery
+              - sqlworkbench:GetUserInfo
+              - sqlworkbench:GetUserWorkspaceSettings
+              - sqlworkbench:ImportNotebook
+              - sqlworkbench:ListConnections
+              - sqlworkbench:ListDatabases
+              - sqlworkbench:ListFiles
+              - sqlworkbench:ListNotebookVersions
+              - sqlworkbench:ListNotebooks
+              - sqlworkbench:ListRedshiftClusters
+              - sqlworkbench:ListQueryExecutionHistory
+              - sqlworkbench:ListSampleDatabases
+              - sqlworkbench:ListSavedQueryVersions
+              - sqlworkbench:ListTabs
+              - sqlworkbench:ListTagsForResource
+              - sqlworkbench:ListTaggedResources
+              - sqlworkbench:PutTab
+              - sqlworkbench:PutUserWorkspaceSettings
+              - sqlworkbench:RestoreNotebookVersion
+              - sqlworkbench:TagResource
+              - sqlworkbench:UpdateAccountExportSettings
+              - sqlworkbench:UpdateAccountConnectionSettings
+              - sqlworkbench:UpdateAccountGeneralSettings
+              - sqlworkbench:UpdateChart
+              - sqlworkbench:UpdateConnection
+              - sqlworkbench:UpdateFileFolder
+              - sqlworkbench:UpdateSavedQuery
+              - sqlworkbench:UpdateNotebook
+              - sqlworkbench:UpdateNotebookCellContent
+              - sqlworkbench:UpdateNotebookCellLayout
+              - sqlworkbench:UpdateFolder
+              - sqlworkbench:UntagResource
+            Resource: '*'       
+ 

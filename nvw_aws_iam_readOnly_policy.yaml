@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: CFT MAnaged via stackset in Payer account.
+Resources:
+  NVWAWSIAMReadOnly:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: CFT MAnaged via stackset in Payer account. IAM ReadOnly Access w/ Passrole
+      ManagedPolicyName: NVW_AWS_IAM_ReadOnly
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: Allow
+          Action:
+          - iam:GenerateCredentialReport
+          - iam:GenerateServiceLastAccessedDetails
+          - iam:Get*
+          - iam:List*
+          - iam:PassRole
+          - iam:SimulateCustomPolicy
+          - iam:SimulatePrincipalPolicy
+          Resource: "*"              

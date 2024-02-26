@@ -1,0 +1,154 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Database Administrator role for all Novawell accounts but identity
+Resources:
+  NVWAWSDatabaseAdminGeneric:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: Database Admin Access to services with no resource constraints 
+      ManagedPolicyName: NVW_AWS_DB_Admin_Generic
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - cloudformation:DescribeStacks
+              - cloudformation:GetTemplateSummary
+              - cloudtrail:Describe*
+              - cloudtrail:Get*
+              - cloudtrail:Lookup*
+              - cloudwatch:Describe*
+              - cloudwatch:DisableAlarmActions
+              - cloudwatch:EnableAlarmActions
+              - cloudwatch:Get*
+              - cloudwatch:List*
+              - cloudwatch:PutMetric*
+              - cloudwatch:PutMetricAlarm
+              - dynamodb:ListTables
+              - ec2:DescribeAccountAttributes
+              - ec2:DescribeAddresses
+              - ec2:DescribeAvailabilityZones
+              - ec2:DescribeImages
+              - ec2:DescribeInstances
+              - ec2:DescribeInternetGateways
+              - ec2:DescribeKeyPairs
+              - ec2:DescribeRouteTables
+              - ec2:DescribeSecurityGroups
+              - ec2:DescribeSubnets
+              - ec2:DescribeVpcAttribute
+              - ec2:DescribeVpcEndpoints
+              - ec2:DescribeVpcs
+              - elasticache:*
+              - es:*
+              - events:*
+              - glue:*
+              - iam:GenerateCredentialReport
+              - iam:GenerateServiceLastAccessedDetails
+              - iam:Get*
+              - iam:List*
+              - kms:DescribeKey
+              - kms:ListAliases
+              - lambda:*
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:DescribeDestinations
+              - logs:DescribeLogGroups
+              - logs:DescribeLogStreams
+              - logs:DescribeMetricFilters
+              - logs:DescribeSubscriptionFilters
+              - logs:FilterLogEvents
+              - logs:GetLogEvents
+              - logs:PutLogEvents
+              - logs:PutSubscriptionFilter
+              - logs:TestMetricFilter
+              - rds:*
+              - redshift-data:DescribeStatement
+              - redshift-data:DescribeTable
+              - redshift-data:GetStatementResult
+              - redshift-data:ListDatabases
+              - redshift-data:ListSchemas
+              - redshift-data:ListStatements
+              - redshift-data:ListTables
+              - redshift:*
+              - s3:GetBucketAcl
+              - s3:GetBucketLocation
+              - s3:ListAllMyBuckets
+              - s3:ListBucket
+              - sns:CreateTopic
+              - sns:Get*
+              - sns:List*
+              - tag:GetResources
+              - tag:GetTagKeys
+              - tag:GetTagValues
+              - tag:TagResources
+              - tag:UntagResources
+              - sqlWorkbench:* 
+              - redshift-serverless:*               
+            Resource: '*'   
+  NVWAWSDatabaseAdminSpecific:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: Database Admin Access to services with resource constraints
+      ManagedPolicyName: NVW_AWS_DB_Admin_Specific
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: Allow
+          Action:
+          - s3:GetBucketLocation
+          - s3:GetObject
+          - s3:ListBucket
+          - s3:ListBucketMultipartUploads
+          - s3:ListMultipartUploadParts
+          - s3:AbortMultipartUpload
+          - s3:CreateBucket
+          - s3:PutBucketOwnershipControls
+          - s3:PutObject
+          Resource:
+          - arn:aws:s3:::aws-athena-query-results-*
+          - arn:aws:logs:*:*:/aws-glue/*
+          - arn:aws:s3:::aws-glue-*
+        - Action:  
+          - cloudformation:CreateStack
+          - cloudformation:DeleteStack 
+          Effect: Allow
+          Resource: arn:aws:cloudformation:*:*:stack/aws-glue*/*
+        - Action: pi:*
+          Effect: Allow
+          Resource: arn:aws:pi:*:*:metrics/rds/*   
+  NVWAWSDatabaseAdminExtra:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: Passrole Policy for Database Administrator
+      ManagedPolicyName: NVW_AWS_DB_Admin_Extra
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: Allow
+          Action:
+          - iam:PassRole
+          Resource: 
+          - arn:aws:iam::*:role/service-role/AWSGlueServiceRole*
+          - arn:aws:iam::*:role/AWSGlueServiceNotebookRole*     
+  NVWAWSDatabaseAdminitrator:
+    Type: "AWS::IAM::Role"
+    Properties: 
+      ManagedPolicyArns:
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/NVW_AWS_DB_Admin_Generic"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/NVW_AWS_DB_Admin_Extra"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/NVW_AWS_DB_Admin_Specific"
+      AssumeRolePolicyDocument: 
+        Statement: 
+        - Effect: Allow
+          Principal:
+            AWS: 
+            - arn:aws:iam::782930490923:role/NVW_AWS_Database_Administrator             
+          Action: 
+            - "sts:AssumeRole"  
+      PermissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy/cleardata-boundary'
+      RoleName: "NVW_AWS_Database_Administrator"
+    DependsOn: 
+      - NVWAWSDatabaseAdminGeneric
+      - NVWAWSDatabaseAdminSpecific
+      - NVWAWSDatabaseAdminExtra
+                   
+

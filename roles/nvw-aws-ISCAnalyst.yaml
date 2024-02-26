@@ -1,0 +1,209 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: NVW_AWS_ISC_Analyst role for Novawell ISC dev and uat accounts assumed from id account managed by CFT
+Resources:
+  NVWAWSISCANALYSTGeneric:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: CFT managed via stackset in payer account. Provides ISC Analyst Access to services with no resource constraints 
+      ManagedPolicyName: NVW_AWS_ISC_Analyst_policy_generic 
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - cloudwatch:GetMetricData
+              - kms:Decrypt
+              - kms:DescribeKey
+              - kms:Encrypt
+              - kms:GenerateDataKey
+              - kms:GenerateDataKeyWithoutPlaintext
+              - kms:ReEncrypt*
+              - lakeformation:GetDataAccess
+              - quicksight:CreateAnalysis
+              - quicksight:CreateDashboard
+              - quicksight:CreateDataSet
+              - quicksight:CreateDataSource
+              - quicksight:CreateTemplate
+              - quicksight:CreateTemplateAlias
+              - quicksight:CreateTheme
+              - quicksight:CreateThemeAlias
+              - quicksight:DeleteAnalysis
+              - quicksight:DeleteDashboard
+              - quicksight:DeleteDataSet
+              - quicksight:DeleteDataSource
+              - quicksight:DeleteFolder
+              - quicksight:DeleteTemplate
+              - quicksight:DeleteTemplateAlias
+              - quicksight:DeleteTheme
+              - quicksight:DeleteThemeAlias
+              - quicksight:DescribeAccountCustomization
+              - quicksight:DescribeAccountSettings
+              - quicksight:DescribeAccountSubscription
+              - quicksight:DescribeAnalysis
+              - quicksight:DescribeAnalysisPermissions
+              - quicksight:DescribeAssetBundleExportJob
+              - quicksight:DescribeAssetBundleImportJob
+              - quicksight:DescribeDashboard
+              - quicksight:DescribeDashboardPermissions
+              - quicksight:DescribeDashboardSnapshotJob
+              - quicksight:DescribeDashboardSnapshotJobResult
+              - quicksight:DescribeDataSet
+              - quicksight:DescribeDataSetRefreshProperties
+              - quicksight:DescribeDataSource
+              - quicksight:DescribeEmailCustomizationTemplate
+              - quicksight:DescribeFolder
+              - quicksight:DescribeFolderPermissions
+              - quicksight:DescribeFolderResolvedPermissions
+              - quicksight:DescribeGroup
+              - quicksight:DescribeGroupMembership
+              - quicksight:DescribeIAMPolicyAssignment
+              - quicksight:DescribeIngestion
+              - quicksight:DescribeIpRestriction
+              - quicksight:DescribeNamespace
+              - quicksight:DescribeRefreshSchedule
+              - quicksight:DescribeTemplate
+              - quicksight:DescribeTemplateAlias
+              - quicksight:DescribeTemplatePermissions
+              - quicksight:DescribeTheme
+              - quicksight:DescribeThemeAlias
+              - quicksight:DescribeThemePermissions
+              - quicksight:DescribeTopic
+              - quicksight:DescribeTopicRefresh
+              - quicksight:DescribeTopicRefreshSchedule
+              - quicksight:DescribeUser
+              - quicksight:DescribeVPCConnection
+              - quicksight:GetAnonymousUserEmbedUrl
+              - quicksight:GetAuthCode
+              - quicksight:GetDashboardEmbedUrl
+              - quicksight:GetGroupMapping
+              - quicksight:GetSessionEmbedUrl
+              - quicksight:ListAnalyses
+              - quicksight:ListAssetBundleExportJobs
+              - quicksight:ListAssetBundleImportJobs
+              - quicksight:ListCustomerManagedKeys
+              - quicksight:ListDashboards
+              - quicksight:ListDashboardVersions
+              - quicksight:ListDataSets
+              - quicksight:ListDataSources
+              - quicksight:ListFolderMembers
+              - quicksight:ListFolders
+              - quicksight:ListGroupMemberships
+              - quicksight:ListGroups
+              - quicksight:ListIAMPolicyAssignments
+              - quicksight:ListIAMPolicyAssignmentsForUser
+              - quicksight:ListIngestions
+              - quicksight:ListKMSKeysForUser
+              - quicksight:ListNamespaces
+              - quicksight:ListRefreshSchedules
+              - quicksight:ListTagsForResource
+              - quicksight:ListTemplateAliases
+              - quicksight:ListTemplates
+              - quicksight:ListTemplateVersions
+              - quicksight:ListThemeAliases
+              - quicksight:ListThemes
+              - quicksight:ListThemeVersions
+              - quicksight:ListTopicRefreshSchedules
+              - quicksight:ListTopics
+              - quicksight:ListUserGroups
+              - quicksight:ListUsers
+              - quicksight:ListVPCConnections
+              - quicksight:PassDataSet
+              - quicksight:PassDataSource
+              - quicksight:SearchAnalyses
+              - quicksight:SearchDashboards
+              - quicksight:SearchDataSets
+              - quicksight:SearchDataSources
+              - quicksight:SearchDirectoryGroups
+              - quicksight:SearchFolders
+              - quicksight:SearchGroups
+              - quicksight:SearchUsers
+              - quicksight:UpdateAnalysis
+              - quicksight:UpdateDashboard
+              - quicksight:UpdateDataSet
+              - quicksight:UpdateDataSource
+              - quicksight:UpdateFolder
+              - quicksight:UpdateTemplate
+              - quicksight:UpdateTemplateAlias
+              - quicksight:UpdateTheme
+              - quicksight:UpdateThemeAlias
+              - redshift-data:BatchExecuteStatement
+              - redshift-data:CancelStatement
+              - redshift-data:DescribeStatement
+              - redshift-data:DescribeTable
+              - redshift-data:ExecuteStatement
+              - redshift-data:GetStatementResult
+              - redshift-data:ListDatabases
+              - redshift-data:ListSchemas
+              - redshift-data:ListStatements
+              - redshift-data:ListTables
+              - redshift-serverless:DescribeOneTimeCredit
+              - redshift-serverless:Get*
+              - redshift-serverless:List*
+              - redshift:Cancel*
+              - redshift:CreateSavedQuery
+              - redshift:DeleteSavedQueries
+              - redshift:Describe*
+              - redshift:ExecuteQuery
+              - redshift:Fetch*
+              - redshift:List*
+              - redshift:View*
+              - s3:GetBucketLocation
+              - s3:GetObject
+              - s3:ListAllMyBuckets
+              - s3:ListBucket
+              - s3:PutObject
+              - secretsmanager:CreateSecret
+              - secretsmanager:DeleteSecret
+              - secretsmanager:DescribeSecret
+              - secretsmanager:GetSecretValue
+              - secretsmanager:ListSecrets
+              - secretsmanager:PutSecretValue
+              - secretsmanager:TagResource
+              - secretsmanager:UpdateSecret
+              - sqlworkbench:*
+              - tag:GetResources 
+            Resource: '*' 
+  NVWAWSISCANALYSTspecific:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: CFT MAnaged via stackset in Payer account. ISC Analyst Access to services with resource constraints 
+      ManagedPolicyName: NVW_AWS_ISC_Analyst_policy_specific 
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - glue:SearchTables
+              - athena:GetWorkGroup
+              - athena:StartQueryExecution
+              - glue:GetDatabase*
+              - athena:StopQueryExecution
+              - athena:GetQueryExecution
+              - athena:GetQueryResults
+              - glue:GetPartition*
+              - glue:GetTable*
+            Resource:
+              - !Sub arn:aws:athena:*:${AWS::AccountId}:workgroup/*
+              - !Sub arn:aws:glue:*:${AWS::AccountId}:database/*
+              - !Sub arn:aws:glue:*:${AWS::AccountId}:catalog
+              - !Sub arn:aws:glue:*:${AWS::AccountId}:table/*/*
+  NVWAWSISCANALYST:
+    Type: 'AWS::IAM::Role'
+    Properties: 
+      Description: CFT MAnaged via stackset in Payer account. NVW AWS ISC Analyst Role
+      ManagedPolicyArns:
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/NVW_AWS_ISC_Analyst_policy_generic"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/NVW_AWS_ISC_Analyst_policy_specific"
+      AssumeRolePolicyDocument: 
+        Statement: 
+        - Effect: Allow
+          Principal:
+            AWS: 
+            - arn:aws:iam::782930490923:role/NVW_AWS_ISC_Analyst             
+          Action: 
+            - "sts:AssumeRole"  
+      PermissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy/cleardata-boundary'
+      RoleName: "NVW_AWS_ISC_Analyst"
+    DependsOn: 
+      - NVWAWSISCANALYSTGeneric
+      - NVWAWSISCANALYSTspecific

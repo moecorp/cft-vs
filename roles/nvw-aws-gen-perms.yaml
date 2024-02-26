@@ -1,0 +1,370 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: CFT MAnaged via stackset in Payer account. Baseline IAM resources for a new Novawell account 
+Resources:
+  NVWAWSDeveloperRole:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: CFT MAnaged via stackset in Payer account. Developer Access to services with no resource constraints 
+      ManagedPolicyName: NVW_AWS_Developer_Generic
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - 'apigateway:*'
+              - 'athena:*'
+              - airflow:*
+              - appflow:*
+              - 'cloudformation:*'
+              - 'config:*'
+              - 'databrew:*'
+              - 'ec2:*'
+              - 'events:*'
+              - 'firehose:*'
+              - 'glue:*'
+              - 'iam:*'
+              - 'kinesis:*'
+              - 'kms:*'
+              - 'lakeformation:*'
+              - 'lambda:*'
+              - 'organizations:*'
+              - 'quicksight:*'
+              - 'redshift:*'
+              - 'redshift-serverless:*'
+              - redshift-data:*
+              - 'rds:*'
+              - 'securityhub:*'
+              - 'secretsmanager:*'
+              - serverless:*
+              - 'states:*'
+              - 'sns:*'
+              - 'sqs:*'
+              - 'ssm:*'
+              - 'application-autoscaling:DeleteScalingPolicy'
+              - 'application-autoscaling:DeregisterScalableTarget'
+              - 'application-autoscaling:DescribeScalableTargets'
+              - 'application-autoscaling:DescribeScalingActivities'
+              - 'application-autoscaling:DescribeScalingPolicies'
+              - 'application-autoscaling:PutScalingPolicy'
+              - 'application-autoscaling:RegisterScalableTarget'
+              - 'dynamodb:DescribeReservedCapacity'
+              - 'dynamodb:DescribeReservedCapacityOfferings'
+              - 'dynamodb:DescribeLimits'
+              - 'dynamodb:DescribeTimeToLive'
+              - 'dynamodb:ListBackups'
+              - 'dynamodb:ListGlobalTables'
+              - 'dynamodb:ListStreams'
+              - 'dynamodb:ListTables'
+              - 'dynamodb:ListTagsOfResource'
+              - 'dynamodb:PurchaseReservedCapacityOfferings'
+              - 'dynamodb:TagResource'
+              - 'dynamodb:UntagResource'
+              - 'logs:DescribeLogStreams'
+              - 'logs:GetLogEvents'
+              - 'secretsmanager:ListSecrets'
+              - 'tag:GetResources'
+              - 'tag:UntagResources'
+              - 'tag:GetTagValues'
+              - 'tag:GetTagKeys'
+              - 'tag:TagResources'
+              - 'transfer:*'
+              - wellarchitected:*
+            Resource: '*'  
+  NVWAWSCrossAccountRam:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: CFT MAnaged via stackset in Payer account. Allows permissions for resource access manager for cross account data sharing
+      ManagedPolicyName: NVW_AWS_CrossAccountData_Ram
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:    
+              - "ram:ListPermissionVersions"
+              - "ram:AcceptResourceShareInvitation"
+              - "ram:EnableSharingWithAwsOrganization"
+              - "ram:GetResourceShareAssociations"
+              - "ram:GetResourcePolicies"
+              - "ram:GetResourceShareInvitations"
+              - "ram:AssociateResourceSharePermission"
+              - "ram:ListResources"
+              - "ram:GetPermission"
+              - "ram:ListResourceSharePermissions"
+              - "ram:ListPermissions"
+              - "ram:GetResourceShares"
+              - "ram:RejectResourceShareInvitation"
+              - "ram:ListPrincipals"
+              - "ram:ListResourceTypes"
+              - "ec2:DescribeAvailabilityZones"
+              - "ram:ListPendingInvitationResources"
+              - "ram:DeleteResourceShare" 
+            Resource: '*'                
+  NVWAWSSQLWorkbench:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: CFT MAnaged via stackset in Payer account. Developer Access to SQLWorkbench with no resource constraints 
+      ManagedPolicyName: NVW_AWS_Developer_SQLWorkbench
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - sqlworkbench:AssociateConnectionWithChart
+              - sqlworkbench:AssociateConnectionWithTab
+              - sqlworkbench:AssociateQueryWithTab
+              - sqlworkbench:BatchDeleteFolder
+              - sqlworkbench:BatchGetNotebookCell
+              - sqlworkbench:CreateAccount
+              - sqlworkbench:CreateChart
+              - sqlworkbench:CreateConnection
+              - sqlworkbench:CreateFolder
+              - sqlworkbench:CreateNotebookCell
+              - sqlworkbench:CreateNotebook
+              - sqlworkbench:CreateNotebookFromVersion
+              - sqlworkbench:CreateNotebookVersion
+              - sqlworkbench:CreateSavedQuery
+              - sqlworkbench:DeleteChart
+              - sqlworkbench:DeleteConnection
+              - sqlworkbench:DeleteNotebook
+              - sqlworkbench:DeleteNotebookCell
+              - sqlworkbench:DeleteNotebookVersion
+              - sqlworkbench:DeleteSavedQuery
+              - sqlworkbench:DeleteTab
+              - sqlworkbench:DriverExecute
+              - sqlworkbench:DuplicateNotebook
+              - sqlworkbench:ExportNotebook
+              - sqlworkbench:GenerateSession
+              - sqlworkbench:GetAccountInfo
+              - sqlworkbench:GetAccountSettings
+              - sqlworkbench:GetAutocompletionMetadata
+              - sqlworkbench:GetAutocompletionResource
+              - sqlworkbench:GetChart
+              - sqlworkbench:GetConnection
+              - sqlworkbench:GetNotebook
+              - sqlworkbench:GetNotebookVersion
+              - sqlworkbench:GetQueryExecutionHistory
+              - sqlworkbench:GetSavedQuery
+              - sqlworkbench:GetUserInfo
+              - sqlworkbench:GetUserWorkspaceSettings
+              - sqlworkbench:ImportNotebook
+              - sqlworkbench:ListConnections
+              - sqlworkbench:ListDatabases
+              - sqlworkbench:ListFiles
+              - sqlworkbench:ListNotebookVersions
+              - sqlworkbench:ListNotebooks
+              - sqlworkbench:ListRedshiftClusters
+              - sqlworkbench:ListQueryExecutionHistory
+              - sqlworkbench:ListSampleDatabases
+              - sqlworkbench:ListSavedQueryVersions
+              - sqlworkbench:ListTabs
+              - sqlworkbench:ListTagsForResource
+              - sqlworkbench:ListTaggedResources
+              - sqlworkbench:PutTab
+              - sqlworkbench:PutUserWorkspaceSettings
+              - sqlworkbench:RestoreNotebookVersion
+              - sqlworkbench:TagResource
+              - sqlworkbench:UpdateAccountExportSettings
+              - sqlworkbench:UpdateAccountConnectionSettings
+              - sqlworkbench:UpdateAccountGeneralSettings
+              - sqlworkbench:UpdateChart
+              - sqlworkbench:UpdateConnection
+              - sqlworkbench:UpdateFileFolder
+              - sqlworkbench:UpdateSavedQuery
+              - sqlworkbench:UpdateNotebook
+              - sqlworkbench:UpdateNotebookCellContent
+              - sqlworkbench:UpdateNotebookCellLayout
+              - sqlworkbench:UpdateFolder
+              - sqlworkbench:UntagResource
+            Resource: '*'       
+  NVWAWSDeveloperspecific:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: CFT MAnaged via stackset in Payer account. Developer Access to services with resource constraints
+      ManagedPolicyName: NVW_AWS_Developer_Specific
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: Allow
+          Action:
+          - dynamodb:BatchGetItem
+          - dynamodb:BatchWriteItem
+          - dynamodb:CreateBackup
+          - dynamodb:CreateGlobalTable
+          - dynamodb:CreateTable
+          - dynamodb:DeleteBackup
+          - dynamodb:DeleteItem
+          - dynamodb:DeleteTable
+          - dynamodb:DescribeBackup
+          - dynamodb:DescribeContinuousBackups
+          - dynamodb:DescribeStream
+          - dynamodb:DescribeTable
+          - dynamodb:GetItem
+          - dynamodb:GetRecords
+          - dynamodb:GetShardIterator
+          - dynamodb:PutItem
+          - dynamodb:Query
+          - dynamodb:RestoreTableFromBackup
+          - dynamodb:RestoreTableToPointInTime
+          - dynamodb:Scan
+          - dynamodb:UpdateContinuousBackups
+          - dynamodb:UpdateGlobalTable
+          - dynamodb:UpdateGlobalTableSettings
+          - dynamodb:UpdateItem
+          - dynamodb:UpdateTable
+          - dynamodb:UpdateTimeToLive
+          Resource:
+          - arn:aws:dynamodb:*:*:table/*/index/*
+          - arn:aws:dynamodb:*:*:table/*/stream/*
+          - arn:aws:dynamodb:*:*:table/*/backup/*
+          - arn:aws:dynamodb::*:global-table/*
+        - Action: pi:*
+          Effect: Allow
+          Resource: arn:aws:pi:*:*:metrics/rds/*   
+  NVWAWSIAMReadOnly:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: CFT MAnaged via stackset in Payer account. IAM ReadOnly Access w/ Passrole
+      ManagedPolicyName: NVW_AWS_IAM_ReadOnly
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: Allow
+          Action:
+          - iam:GenerateCredentialReport
+          - iam:GenerateServiceLastAccessedDetails
+          - iam:Get*
+          - iam:List*
+          - iam:PassRole
+          - iam:SimulateCustomPolicy
+          - iam:SimulatePrincipalPolicy
+          Resource: "*"      
+  NVWAWSConsoleSuperUserPolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: CFT MAnaged via stackset in Payer account. Allows permissions for NVW_AWS_Console_SuperUser
+      ManagedPolicyName: NVW_AWS_Console_SuperUser_Policy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:    
+              - ssm:*
+              - fsx:*
+              - ds:*
+              - iam:CreateRole
+              - iam:CreateServiceLinkedRole
+              - sns:*
+              - cloudtrail:*
+            Resource: '*'             
+  NVWAWSConsoleReadOnly:
+    Type: "AWS::IAM::Role"
+    Properties: 
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/ReadOnlyAccess"
+      AssumeRolePolicyDocument: 
+        Statement: 
+        - Effect: Allow
+          Principal:
+            AWS: "arn:aws:iam::782930490923:role/NVW_AWS_Console_ReadOnly"
+          Action: 
+            - "sts:AssumeRole"
+            - "sts:TagSession"
+      PermissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy/cleardata-boundary'
+      RoleName: "NVW_AWS_Console_ReadOnly"
+  NVWAWSAdmins:
+    Type: "AWS::IAM::Role"
+    Properties: 
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/AdministratorAccess"
+      AssumeRolePolicyDocument: 
+        Statement: 
+        - Effect: Allow
+          Principal:
+            AWS: 
+            - arn:aws:iam::782930490923:role/NVW_AWS_Console_Administrator
+          Action:
+            - "sts:AssumeRole" 
+            - "sts:TagSession"                                  
+      PermissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy/cleardata-boundary'
+      RoleName: "NVW_AWS_Console_Administrator"      
+  NVWAWSDeveloper:
+    Type: "AWS::IAM::Role"
+    Properties: 
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+        - "arn:aws:iam::aws:policy/CloudWatchFullAccess"
+        - "arn:aws:iam::aws:policy/AWSLakeFormationCrossAccountManager"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/NVW_AWS_Developer_Generic"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/NVW_AWS_CrossAccountData_Ram"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/NVW_AWS_Developer_Specific"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/NVW_AWS_Developer_SQLWorkbench"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/cleardata/customer/DPHI-Policy-CloudtrailAdmin"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/cleardata/customer/DPHI-Policy-LoadBalancingAdmin"
+      AssumeRolePolicyDocument: 
+        Statement: 
+        - Effect: Allow
+          Principal:
+            AWS: 
+            - arn:aws:iam::782930490923:role/NVW_AWS_Developer_NonProd
+            - arn:aws:iam::782930490923:role/NVW_AWS_Developer
+            - arn:aws:iam::782930490923:root             
+          Action: 
+            - "sts:AssumeRole"  
+            - "sts:TagSession"
+      PermissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy/cleardata-boundary'
+      RoleName: "NVW_AWS_Developer"
+    DependsOn: 
+      - NVWAWSDeveloperRole
+      - NVWAWSCrossAccountRam
+      - NVWAWSSQLWorkbench
+      - NVWAWSDeveloperspecific
+  NVWAWSConsoleSuperUser:
+    Type: "AWS::IAM::Role"
+    Properties: 
+      ManagedPolicyArns:
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/cleardata/customer/DPHI-Policy-SuperUser-1"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/NVW_AWS_IAM_ReadOnly" 
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/NVW_AWS_Console_SuperUser_Policy"                  
+        - "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+        - "arn:aws:iam::aws:policy/AmazonRDSFullAccess"       
+        - "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
+        - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+        - "arn:aws:iam::aws:policy/AWSConfigUserAccess"          
+        - "arn:aws:iam::aws:policy/AWSKeyManagementServicePowerUser"                                   
+      AssumeRolePolicyDocument: 
+        Statement: 
+        - Effect: Allow
+          Principal:
+            AWS:
+            - arn:aws:iam::782930490923:role/NVW_AWS_Console_SuperUser             
+          Action: 
+            - "sts:AssumeRole"  
+            - "sts:TagSession"
+      PermissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy/cleardata-boundary'
+      RoleName: "NVW_AWS_Console_SuperUser"   
+    DependsOn: 
+      - NVWAWSIAMReadOnly
+      - NVWAWSConsoleSuperUserPolicy                      
+  NVWAWSCloudFormation:
+    Type: "AWS::IAM::Role"
+    Properties: 
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+        - "arn:aws:iam::aws:policy/CloudWatchFullAccess"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/NVW_AWS_Developer_Generic"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/NVW_AWS_Developer_Specific"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/cleardata/customer/DPHI-Policy-LoadBalancingAdmin" 
+      AssumeRolePolicyDocument: 
+        Statement: 
+        - Effect: Allow
+          Principal:
+            AWS: 
+            - arn:aws:iam::782930490923:role/NVW_AWS_CloudFormation
+          Action:
+            - "sts:AssumeRole"   
+            - "sts:TagSession"
+      PermissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy/cleardata-boundary'
+      RoleName: "NVW_AWS_CloudFormation"    
+    DependsOn: 
+      - NVWAWSDeveloperRole
+      - NVWAWSDeveloperspecific  

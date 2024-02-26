@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: test cft desc
+Resources:
+  AWSTESTPOLICY:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: test policy
+      ManagedPolicyName: moe_test_policy 
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+             - iam:*,
+             - S3:*
+            Resource: '*' 
+  AWSTESTROLE:
+    Type: 'AWS::IAM::Role'
+    Properties: 
+      Description: test role desc
+      ManagedPolicyArns:
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/moe_test_policy"
+      AssumeRolePolicyDocument: 
+        Statement: 
+        - Effect: Allow
+          Principal:
+            AWS: 
+            - arn:aws:iam::499413842645:user/moe_test_user             
+          Action: 
+            - "sts:AssumeRole"  
+      RoleName: "moe_test_role"
+    DependsOn: 
+      - AWSTESTPOLICY

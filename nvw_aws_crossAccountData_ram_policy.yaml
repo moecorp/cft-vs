@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: CFT MAnaged via stackset in Payer account. 
+Resources:
+  NVWAWSCrossAccountRam:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: CFT MAnaged via stackset in Payer account. Allows permissions for resource access manager for cross account data sharing
+      ManagedPolicyName: NVW_AWS_CrossAccountData_Ram
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:    
+              - "ram:ListPermissionVersions"
+              - "ram:AcceptResourceShareInvitation"
+              - "ram:EnableSharingWithAwsOrganization"
+              - "ram:GetResourceShareAssociations"
+              - "ram:GetResourcePolicies"
+              - "ram:GetResourceShareInvitations"
+              - "ram:AssociateResourceSharePermission"
+              - "ram:ListResources"
+              - "ram:GetPermission"
+              - "ram:ListResourceSharePermissions"
+              - "ram:ListPermissions"
+              - "ram:GetResourceShares"
+              - "ram:RejectResourceShareInvitation"
+              - "ram:ListPrincipals"
+              - "ram:ListResourceTypes"
+              - "ec2:DescribeAvailabilityZones"
+              - "ram:ListPendingInvitationResources"
+              - "ram:DeleteResourceShare" 
+            Resource: '*'                
+ 

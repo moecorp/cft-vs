@@ -1,0 +1,72 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: CFT MAnaged via stackset in Payer account. 
+Resources:
+  NVWAWSDeveloperpolic:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: CFT MAnaged via stackset in Payer account. Developer Access to services with no resource constraints 
+      ManagedPolicyName: NVW_AWS_Developer_Generic
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - apigateway:*
+              - athena:*
+              - airflow:*
+              - appflow:*
+              - cloudformation:*
+              - config:*
+              - databrew:*
+              - ec2:*
+              - events:*
+              - firehose:*
+              - glue:*
+              - iam:*
+              - kinesis:*
+              - kms:*
+              - lakeformation:*
+              - lambda:*
+              - organizations:*
+              - quicksight:*
+              - redshift:*
+              - redshift-serverless:*
+              - redshift-data:*
+              - rds:*
+              - securityhub:*
+              - secretsmanager:*
+              - serverless:*
+              - states:*
+              - sns:*
+              - sqs:*
+              - ssm:*
+              - application-autoscaling:DeleteScalingPolicy
+              - application-autoscaling:DeregisterScalableTarget
+              - application-autoscaling:DescribeScalableTargets
+              - application-autoscaling:DescribeScalingActivities
+              - application-autoscaling:DescribeScalingPolicies
+              - application-autoscaling:PutScalingPolicy
+              - application-autoscaling:RegisterScalableTarget
+              - dynamodb:DescribeReservedCapacity
+              - dynamodb:DescribeReservedCapacityOfferings
+              - dynamodb:DescribeLimits
+              - dynamodb:DescribeTimeToLive
+              - dynamodb:ListBackups
+              - dynamodb:ListGlobalTables
+              - dynamodb:ListStreams
+              - dynamodb:ListTables
+              - dynamodb:ListTagsOfResource
+              - dynamodb:PurchaseReservedCapacityOfferings
+              - dynamodb:TagResource
+              - dynamodb:UntagResource
+              - logs:DescribeLogStreams
+              - logs:GetLogEvents
+              - secretsmanager:ListSecrets
+              - tag:GetResources
+              - tag:UntagResources
+              - tag:GetTagValues
+              - tag:GetTagKeys
+              - tag:TagResources
+              - transfer:*
+              - wellarchitected:*
+            Resource: '*' 

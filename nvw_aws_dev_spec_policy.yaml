@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: CFT MAnaged via stackset in Payer account.
+Resources:     
+  NVWAWSDeveloperspecific:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: CFT MAnaged via stackset in Payer account. Developer Access to services with resource constraints
+      ManagedPolicyName: NVW_AWS_Developer_Specific
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: Allow
+          Action:
+          - dynamodb:BatchGetItem
+          - dynamodb:BatchWriteItem
+          - dynamodb:CreateBackup
+          - dynamodb:CreateGlobalTable
+          - dynamodb:CreateTable
+          - dynamodb:DeleteBackup
+          - dynamodb:DeleteItem
+          - dynamodb:DeleteTable
+          - dynamodb:DescribeBackup
+          - dynamodb:DescribeContinuousBackups
+          - dynamodb:DescribeStream
+          - dynamodb:DescribeTable
+          - dynamodb:GetItem
+          - dynamodb:GetRecords
+          - dynamodb:GetShardIterator
+          - dynamodb:PutItem
+          - dynamodb:Query
+          - dynamodb:RestoreTableFromBackup
+          - dynamodb:RestoreTableToPointInTime
+          - dynamodb:Scan
+          - dynamodb:UpdateContinuousBackups
+          - dynamodb:UpdateGlobalTable
+          - dynamodb:UpdateGlobalTableSettings
+          - dynamodb:UpdateItem
+          - dynamodb:UpdateTable
+          - dynamodb:UpdateTimeToLive
+          Resource:
+          - arn:aws:dynamodb:*:*:table/*/index/*
+          - arn:aws:dynamodb:*:*:table/*/stream/*
+          - arn:aws:dynamodb:*:*:table/*/backup/*
+          - arn:aws:dynamodb::*:global-table/*
+        - Action: pi:*
+          Effect: Allow
+          Resource: arn:aws:pi:*:*:metrics/rds/*   

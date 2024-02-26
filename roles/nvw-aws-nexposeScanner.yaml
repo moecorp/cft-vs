@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Managed by CF stackset in payer Nexpose-Scanner-Role for all Novawell acocunts with Ec2 instances running
+Resources:
+  svcNexposeAssumeRole:
+    Type: "AWS::IAM::Role"
+    Properties: 
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/SecurityAudit"
+        - "arn:aws:iam::aws:policy/job-function/ViewOnlyAccess"
+      AssumeRolePolicyDocument: 
+        Statement: 
+        - Effect: Allow
+          Principal:
+            AWS: 
+            - arn:aws:iam::782930490923:user/svc_nexpose            
+          Action: 
+            - "sts:AssumeRole"  
+      PermissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy/cleardata-boundary'
+      RoleName: "svc_nexpose_assume_role"
+
+
+                   
+

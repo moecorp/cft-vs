@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: CFT MAnaged via stackset in Payer account. 
+Resources:     
+  NVWAWSConsoleReadOnly:
+    Type: "AWS::IAM::Role"
+    Properties: 
+      Description: CFT MAnaged via stackset in Payer account.
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/ReadOnlyAccess"
+      AssumeRolePolicyDocument: 
+        Statement: 
+        - Effect: Allow
+          Principal:
+            AWS: "arn:aws:iam::782930490923:role/NVW_AWS_Console_ReadOnly"
+          Action: 
+            - "sts:AssumeRole"
+            - "sts:TagSession"
+      PermissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy/cleardata-boundary'
+      RoleName: "NVW_AWS_Console_ReadOnly"
+  

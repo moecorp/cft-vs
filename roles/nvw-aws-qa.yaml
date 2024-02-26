@@ -1,0 +1,69 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Managed by stackset in Payer account. NVW_AWS_QA role for Novawell Test accounts. Will be assumed from identity account role of the same name.
+Resources:
+  NVWAWSQAGeneric:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: CFT MAnaged via stackset in Payer account. QA Access to services with no resource constraints 
+      ManagedPolicyName: NVW_AWS_QA_policy_generic 
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+          -	appflow:CancelFlowExecutions
+          -	appflow:Describe*
+          -	appflow:ListFlows
+          -	appflow:RunFlow
+          -	appflow:StartFlow
+          -	athena:Get*
+          -	athena:List*
+          -	athena:startqueryexecution
+          -	athena:stopqueryexecution
+          -	Cloudwatch:*
+          -	dynamoDB:GetItem
+          -	dynamoDB:GetRecords
+          -	dynamoDB:ListTables
+          -	dynamoDB:Query
+          -	dynamoDB:Scan
+          -	glue:*
+          -	kms:Decrypt
+          -	kms:Describe*
+          -	kms:List*
+          -	lakeformation:Get*
+          -	lakeformation:List*
+          -	lambda:*
+          -	logs:*
+          -	rds:*
+          -	redshift-serverless:*
+          -	Redshift:*
+          -	s3:*
+          -	secretsmanager:CreateSecret
+          -	secretsmanager:DeleteSecret
+          -	secretsmanager:GetSecretValue
+          -	secretsmanager:ListSecrets
+          -	secretsmanager:TagResource
+          -	sqlworkbench:*
+          -	tag:GetResources
+          -	tag:GetTagKeys
+          -	tag:GetTagValues
+            Resource: '*' 
+  NVWAWSQA:
+    Type: 'AWS::IAM::Role'
+    Properties: 
+      Description: CFT MAnaged via stackset in Payer account. NVW AWS QA Role for use in test accounts
+      ManagedPolicyArns:
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/NVW_AWS_QA_policy_generic"
+        
+      AssumeRolePolicyDocument: 
+        Statement: 
+        - Effect: Allow
+          Principal:
+            AWS: 
+            - arn:aws:iam::782930490923:role/NVW_AWS_QA             
+          Action: 
+            - "sts:AssumeRole"  
+      PermissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy/cleardata-boundary'
+      RoleName: "NVW_AWS_QA"
+    DependsOn: 
+      - NVWAWSQAGeneric

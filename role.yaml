@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: CFT MAnaged via stackset in Payer account. 
+Resources:
+  CheckPolicyExists:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: <S3 URL or relative path to common-policy.yaml>
+
+  MyIAMRole1:
+    Type: AWS::IAM::Role
+    Properties:
+      # Role properties here
+      ManagedPolicyArns:
+        - Fn::If:
+          - PolicyDoesNotExist
+          - !Ref MyCommonManagedPolicy
+          - !Sub "arn:aws:iam::${AWS::AccountId}:policy/MyCommonManagedPolicy"
+
+Conditions:
+  PolicyDoesNotExist: !Equals [!GetAtt CheckPolicyExists.Outputs.NVWawsDevGenPolicy, ""]
+

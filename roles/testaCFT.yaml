@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: testa cft desc
+Resources:
+  AWSTESTAPOLICY:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: testa policy
+      ManagedPolicyName: moe_testa_policy 
+      PolicyDocument:
+        Version: " 2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+             - iam:*
+            Resource: '*' 
+  AWSTESTAROLE:
+    Type: 'AWS::IAM::Role'
+    Properties: 
+      Description: testa role desc
+      ManagedPolicyArns:
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/moe_testa_policy"
+      AssumeRolePolicyDocument: 
+        Statement: 
+        - Effect: Allow
+          Principal:
+            AWS: 
+            - arn:aws:iam::499413842645:user/moe_test_user             
+          Action: 
+            - "sts:AssumeRole"  
+      RoleName: "moe_testa_role"
+    DependsOn: 
+      - AWSTESTAPOLICY
